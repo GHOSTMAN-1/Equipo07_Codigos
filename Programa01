@@ -1,0 +1,99 @@
+/**
+ * @file persona.cpp
+ * @author gonzalez hernandez luis (warrior45p@gmail.com)
+ * @brief encapsulamiento
+ * @version 0.1
+ * @date 2025-09-13
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+#include<iostream>
+#include<string>
+using namespace std;
+
+class Persona
+{
+private:    /*atributos*/
+string nombre;
+int edad;
+string estatura;
+string telefono;
+
+
+public:  /*constructores*/
+    Persona() : nombre(""), edad(0), estatura(""), telefono(""){}  /*constructor predeterminado, se utilizan los dos porque se esta usando arreglos*/
+    
+    Persona(string n,int e, string es, string t) : nombre(n), edad(e), estatura(es), telefono(t) {} /*constructor con parametros*/
+
+    /*destructor*/
+    ~Persona() {
+        cout<<"persona eliminada: "<< nombre << endl;
+    }
+
+
+//getters
+string getNombre() const { return nombre; } 
+int getEdad() const { return edad; }
+string getEstatura() const { return estatura; }
+string getTelefono() const { return telefono; }
+
+//setters
+void setNombre(string nombre) { this->nombre = nombre; }
+void setEdad(int edad) { this->edad = edad; }
+void setEstatura(string estatura) { this->estatura = estatura; }
+void setTelefono(string telefono) { 
+    this->telefono = telefono; 
+}
+
+/*metodo toString*/
+string toString() const {
+    int añoActual= 2025;
+    int añoNacimiento= 2025 - edad;
+    return "iHola!, Mi nombre es " + nombre + ", tengo " + to_string(edad) + " anios, naci en "
+     + to_string(añoNacimiento) + ", mido " + estatura + " metros y mi numero de contacto es "
+     + telefono + " iSaludos!";
+  }
+
+};
+
+int main(){
+int n;
+cout<< "ingrese el numero de personas: ";
+cin>> n;
+Persona** personas = new Persona*[n]; //arreglo de punteros a Persona
+
+for (int i = 0; i < n; i++)
+{
+    string nombre;
+    int edad;
+    string estatura;
+    string telefono;
+
+    cout<< endl << "Datos de la persona: " << (i+1)<< ":" << endl; /*i+1 para mostrar una numeracion empezando con el 1*/
+    cout << "Nombre: "; cin>> nombre;
+    cout << "Edad: "; cin>> edad;
+    cout<< "Estatura: "; cin>> estatura;
+    cout<< "Telefono: "; cin >> telefono;
+
+    personas[i] = new Persona(nombre, edad, estatura, telefono); /*se crea el objeto cuando se tienen los datos*/
+
+}
+
+cout<< "\n Datos de las personas"<< endl;
+for (int i = 0; i < n; i++)
+{
+    cout << "persona " << (i + 1) << ": "<< endl;
+     cout<< personas[i]->toString() << endl;
+  }
+
+  for (int i = 0; i < n; i++) /*se libera la memoria (cada objeto creado con new)*/
+  {
+    delete personas [i]; /*llama al destructor de cada persona*/
+  }
+
+  delete[] personas; /*liberar el arreglo de punteros*/
+  
+
+    return 0;
+}
