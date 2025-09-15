@@ -1,0 +1,139 @@
+/** 
+* @file programa2.cpp
+* @author Almazán Rodríguez Valeria Grisel
+* @brief Practica 2, programa 2
+* @version 0.1
+* @date 2025-09-15
+* @copyright Derechos de autor (c) 2025
+*/
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Profesor {
+private:
+    string nc;
+    string nue;
+
+public:
+    Profesor() {}
+    Profesor(string nc, string nue) : nc(nc), nue(nue) {}
+
+    // Setters
+    void setnc(const string &no) { nc = no; }
+    void setnue(const string &num) { nue = num; }
+
+    // Getters
+    string getnc() const { return nc; }
+    string getnue() const { return nue; }
+};
+
+class Alumno {
+private:
+    string nom;
+    string ap;
+    string am;
+    string nb;
+    string fn;
+    string c;
+    string g;
+    string ce;
+
+public:
+    Alumno() {}
+
+    // Setters
+    void setnom(const string &nn) { nom = nn; }
+    void setap(const string &app) { ap = app; }
+    void setam(const string &amm) { am = amm; }
+    void setnb(const string &nbb) { nb = nbb; }
+    void setfn(const string &ff) { fn = ff; }
+    void setc(const string &cc) { c = cc; }
+    void setg(const string &gg) { g = gg; }
+    void setce(const string &cee) { ce = cee; }
+
+    // Captura de datos
+    void capturardatos() {
+        cout << "Nombre: ";
+        getline(cin, nom);
+        cout << "Apellido paterno: ";
+        getline(cin, ap);
+        cout << "Apellido materno: ";
+        getline(cin, am);
+        cout << "Numero de boleta: ";
+        getline(cin, nb);
+        cout << "Fecha de nacimiento (DD/MM/AAAA): ";
+        getline(cin, fn);
+        cout << "Carrera: ";
+        getline(cin, c);
+        cout << "Grupo: ";
+        getline(cin, g);
+        cout << "Correo: ";
+        getline(cin, ce);
+    }
+
+    // Imprimir datos
+    void imprimir(int indice) const {
+        cout << indice << ". " << ap << " " << am << ", " << nom
+             << " - " << nb << " - " << fn << " - " << c << " - " << g
+             << " - " << ce << endl;
+    }
+};
+
+class listaAlumnos {
+private:
+    vector<Alumno> lista;
+
+public:
+    void agregarAlumno(const Alumno &a) {
+        lista.push_back(a);
+    }
+
+    void mostrarlista(const Profesor &profesor) const {
+        cout << "===================================" << endl;
+        cout << "Profesor: " << profesor.getnc() << endl;
+        cout << "No. Empleado: " << profesor.getnue() << endl;
+        cout << "===================================" << endl;
+        cout << "     Lista de Alumnos Inscritos" << endl;
+        cout << "===================================" << endl;
+        for (size_t i = 0; i < lista.size(); i++) {
+            lista[i].imprimir(i + 1);
+        }
+        cout << "===================================" << endl;
+        cout << "Total de alumnos inscritos: " << lista.size() << endl;
+    }
+};
+
+int main() {
+    Profesor profesor;
+    string nc, nue;
+    int n;
+
+    cout << "Ingrese el nombre completo del profesor: ";
+    getline(cin, nc);
+    cout << "Ingrese el numero de empleado: ";
+    getline(cin, nue);
+
+    profesor.setnc(nc);
+    profesor.setnue(nue);
+
+    listaAlumnos lista;
+    cout << "Ingrese el numero de alumnos que quiere registrar: ";
+    cin >> n;
+    cin.ignore(); 
+
+    for (int i = 0; i < n; i++) {
+        cout << "\n--- Alumno " << i + 1 << " ---" << endl;
+        Alumno a;
+        a.capturardatos();
+        lista.agregarAlumno(a);
+    }
+
+    cout << "\n\n--- Lista Final ---" << endl;
+    lista.mostrarlista(profesor);
+
+    return 0;
+}
